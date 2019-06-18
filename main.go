@@ -25,31 +25,22 @@ func main() {
 		if mobile == "13715277993" && passwd == "123456" {
 			loginok = true
 		}
+		//成功
 		str := `{"code":0,"data":{"id":1,"token":"test"}}`
 		if !loginok {
-			//成功
-
-		}
-
-			//设置header 为JSON 默认的 text/html 所以特别指定返回个格式
-			//applicaltion/json
-			w.Header().Set("Content-Type", "applicaltion/json")
-			//设置状态码200
-			w.WriteHeader(http.StatusOK)
-			//写入ResponseWriter
-			w.Write([]byte(str))
-		else {
 			//失败
-			str := `{"code":-1,"msg":"密码不正确"}`
-			//设置header 为JSON 默认的 text/html 所以特别指定返回个格式
-			//applicaltion/json
-			w.Header().Set("Content-Type", "applicaltion/json")
-			//设置状态码200
-			w.WriteHeader(http.StatusOK)
-			//写入ResponseWriter
-			w.Write([]byte(str))
+			str = `{"code":-1,"msg":"密码不正确"}`
+
 		}
-		//如何返回json
+
+		//设置header 为JSON 默认的 text/html 所以特别指定返回个格式
+		//application/json
+		w.Header().Set("Content-Type", "application/json")
+
+		//设置状态码200
+		w.WriteHeader(http.StatusOK)
+		//写入ResponseWriter
+		w.Write([]byte(str))
 
 	})
 
