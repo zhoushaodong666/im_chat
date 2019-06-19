@@ -18,6 +18,7 @@
     function userInfo(o){
         if(typeof  o =="undefined"){
             var r = sessionStorage.getItem("userinfo");
+            console.log(JSON.parse(r))
             if(!!r){
                 return JSON.parse(r);
             }else{
@@ -28,9 +29,9 @@
         }
     }
     var url = location.href;
-    var isOpen = url.indexOf("/login")>-1 || url.indexOf("/register")>-1
+    var isOpen = url.indexOf("/login")>-1 || url.indexOf("/register")>-1;
     if (!userId() && !isOpen){
-      // location.href = "login.shtml";
+       //location.href = "login.shtml";
     }
 
 </script>

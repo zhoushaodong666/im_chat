@@ -84,6 +84,7 @@ func Chat(writer http.ResponseWriter,
 	query := request.URL.Query()
 	id := query.Get("id")
 	token := query.Get("token")
+
 	userId, _ := strconv.ParseInt(id, 10, 64)
 	isvalida := checkToken(userId, token)
 	//如果isvalida=true

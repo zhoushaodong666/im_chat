@@ -31,6 +31,7 @@ func main() {
 	http.HandleFunc("/user/login", controller.UserLogin)
 	//用户注册
 	http.HandleFunc("/user/register", controller.UserRegister)
+
 	http.HandleFunc("/contact/loadcommunity", controller.LoadCommunity)
 	http.HandleFunc("/contact/loadfriend", controller.LoadFriend)
 	http.HandleFunc("/contact/joincommunity", controller.JoinCommunity)

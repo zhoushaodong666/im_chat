@@ -335,7 +335,7 @@
                     },
                     _addfriend:function(dstobj){
                         var user = userInfo();
-
+                        console.log("userinfo:"+user);
                         post("user/addfriend",{dstid:dstobj,userid: user.id,pic:user.avatar,content:user.nickname,memo: "请求加你为好友"},function(res){
                             if(res.code==200){
                                 mui.toast("添加成功");
