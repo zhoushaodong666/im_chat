@@ -3,6 +3,7 @@
     function userId(id){
         if(typeof  id =="undefined"){
             var r = sessionStorage.getItem("userid");
+
             if(!r){
                 return 0;
             }else{
@@ -10,8 +11,10 @@
             }
         }else{
             sessionStorage.setItem("userid",id);
+            console.log("登录成功，设置userid="+id)
         }
     }
+
     function userInfo(o){
         if(typeof  o =="undefined"){
             var r = sessionStorage.getItem("userinfo");

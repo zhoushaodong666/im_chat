@@ -1,12 +1,11 @@
 package util
 
 import (
-	"net/http"
-
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
