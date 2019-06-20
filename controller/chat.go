@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
 	"gopkg.in/fatih/set.v0"
@@ -122,6 +123,7 @@ func sendproc(node *Node) {
 	for {
 		select {
 		case data := <-node.DataQueue:
+			fmt.Println("从通道中取数据并写入WebSocket: ", string(data))
 			err := node.Conn.WriteMessage(websocket.TextMessage, data)
 			if err != nil {
 				log.Println(err.Error())
@@ -140,17 +142,37 @@ func recvproc(node *Node) {
 			return
 		}
 		//todo 对data进一步处理
-		fmt.Printf("recv<=%s", data)
+		fmt.Printf("接收到数据: %s\n", data)
+		dispatch(data)
 	}
 }
 
 //todo 参数处理
 func dispatch(data []byte) {
+	//TODO 解析data为message
+	msg := Message{}
+	err := json.Unmarshal(data, &msg)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	//TODO 根据message的cmd属性做相应的处理
+	switch msg.Cmd {
+	case CMD_SINGLE_MSG:
+		sendMsg(msg.Dstid, data)
+	case CMD_ROOM_MSG:
+		//TODO 群聊
+	case CMD_HEART:
+		//TODO 接收到心跳 一般不做处理
+
+	}
 
 }
 
 //todo 发送消息
 func sendMsg(userId int64, msg []byte) {
+	fmt.Println("像通道内写数据: ", string(msg))
+
 	rwlocker.RLock()
 	node, ok := clientMap[userId]
 	rwlocker.RUnlock()

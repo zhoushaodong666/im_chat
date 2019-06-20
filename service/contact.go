@@ -154,6 +154,7 @@ func (service *ContactService) SearchFriend(userId int64) []model.User {
 	if len(objIds) == 0 {
 		return coms
 	}
-	DbEngine.In("id", objIds).Find(&coms)
+	DbEngine.In("id", objIds).Cols("id", "avatar", "mobile", "sex", "nickname", "memo", "createat").Find(&coms)
+
 	return coms
 }
