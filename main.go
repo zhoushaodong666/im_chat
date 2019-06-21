@@ -38,11 +38,13 @@ func main() {
 
 	http.HandleFunc("/contact/addfriend", controller.Addfriend)
 	http.HandleFunc("/chat", controller.Chat)
+	http.HandleFunc("/attach/upload", controller.Upload)
 
 	//1.提供静态资源目录支持
 	//http.Handle("/",http.FileServer(http.Dir(".")))
 	//2.提供指定目录的静态文件支持
 	http.Handle("/asset/", http.FileServer(http.Dir(".")))
+	http.Handle("/mnt/", http.FileServer(http.Dir(".")))
 
 	ResiterView()
 	//启动web服务器

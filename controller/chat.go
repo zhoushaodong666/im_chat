@@ -106,6 +106,11 @@ func Chat(writer http.ResponseWriter,
 		DataQueue: make(chan []byte, 50),
 		GroupSets: set.New(set.ThreadSafe),
 	}
+	//todo 获取用户全部群Id
+	comIds := contactService.SearchComunityIds(userId)
+	for _, v := range comIds {
+		node.GroupSets.Add(v)
+	}
 	//todo userid和node形成绑定关系
 	rwlocker.Lock()
 	clientMap[userId] = node
@@ -162,6 +167,11 @@ func dispatch(data []byte) {
 		sendMsg(msg.Dstid, data)
 	case CMD_ROOM_MSG:
 		//TODO 群聊
+		for _, v := range clientMap {
+			if v.GroupSets.Has(msg.Dstid) {
+				v.DataQueue <- data
+			}
+		}
 	case CMD_HEART:
 		//TODO 接收到心跳 一般不做处理
 

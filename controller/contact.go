@@ -32,6 +32,8 @@ func JoinCommunity(w http.ResponseWriter, req *http.Request) {
 	//如果这个用的上,那么可以直接
 	util.Bind(req, &arg)
 	err := contactService.JoinCommunity(arg.Userid, arg.Dstid)
+	//TODO 刷新用户的群组信息
+	AddGroupId(arg.Userid, arg.Dstid)
 	if err != nil {
 		util.RespFail(w, err.Error())
 	} else {
@@ -56,4 +58,17 @@ func Addfriend(w http.ResponseWriter, req *http.Request) {
 	} else {
 		util.RespOk(w, nil, "好友添加成功")
 	}
+}
+
+//todo 添加新的群ID到用户的groupset中
+func AddGroupId(userId, gid int64) {
+	//取得node
+	rwlocker.Lock()
+	node, ok := clientMap[userId]
+	if ok {
+		node.GroupSets.Add(gid)
+	}
+	rwlocker.Unlock()
+
+	//添加gid到set
 }
